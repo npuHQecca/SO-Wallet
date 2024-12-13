@@ -14,6 +14,7 @@ class IncomeViewModel: ObservableObject {
     @Published var updatedCategoryName: String = ""
     @Published var updatedCategoryIcon: String = "briefcase"
     
+    
     let maxCategories = 4
 
     // Добавление новой категории дохода

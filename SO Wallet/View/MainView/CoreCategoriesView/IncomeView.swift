@@ -9,6 +9,7 @@ import SwiftUI
 
 struct IncomeView: View {
     @StateObject private var viewModel = IncomeViewModel()
+    @EnvironmentObject var overlayViewModel: OverlayViewModel
 
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
@@ -61,7 +62,9 @@ struct IncomeView: View {
                                             viewModel.selectedCategory = category
                                             viewModel.updatedCategoryName = category.name
                                             viewModel.updatedCategoryIcon = category.icon
-                                            viewModel.showEditOverlay = true
+                                            
+                                           
+                                            overlayViewModel.showOverlay(EditOverlayView(viewModel: viewModel))
                                         }
                                 }
                             }
@@ -72,68 +75,11 @@ struct IncomeView: View {
             }
         }
         .padding(.bottom, 16)
-        .overlay(
-            Group {
-                if viewModel.showEditOverlay {
-                    ZStack {
-                        Color.black.opacity(0.4)
-                            .ignoresSafeArea()
-                        
-                        VStack {
-                            Image(systemName: viewModel.updatedCategoryIcon)
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 72, height: 72)
-                                .foregroundColor(.gray)
-                                .padding(.vertical, 16)
-                            
-                            TextField("Category Name", text: $viewModel.updatedCategoryName)
-                                .font(.title3)
-                                .padding()
-                                .background(Color(.systemGray6))
-                                .cornerRadius(8)
-                                .padding(.horizontal)
-                            
-                            HStack(spacing: 10) {
-                                Button("Save") {
-                                    viewModel.saveCategoryChanges()
-                                }
-                                .padding()
-                                .background(Color.blue)
-                                .foregroundColor(.white)
-                                .cornerRadius(8)
-                                
-                                Button("Delete") {
-                                    viewModel.deleteCategory()
-                                }
-                                .padding()
-                                .background(Color.red)
-                                .foregroundColor(.white)
-                                .cornerRadius(8)
-                                
-                                Button("Cancel") {
-                                    viewModel.showEditOverlay = false
-                                }
-                                .padding()
-                                .background(Color.gray)
-                                .foregroundColor(.white)
-                                .cornerRadius(8)
-                            }
-                        }
-                        .padding()
-                        .background(Color.white)
-                        .cornerRadius(25)
-                        .shadow(color: .gray.opacity(0.3), radius: 8, x: 0, y: 5)
-                        .frame(width: UIScreen.main.bounds.width * 0.7, height: UIScreen.main.bounds.height * 0.35)
-                    }
-                    .transition(.opacity)
-                }
-            }
-            .animation(.easeInOut(duration: 0.3), value: viewModel.showEditOverlay),
-            alignment: .center
-        )
     }
 }
+
+
+
 
 #Preview {
     IncomeView()

@@ -12,3 +12,7 @@ struct User: Identifiable, Codable {
     let email: String
     
 }
+
+extension User {
+    static var MOK_USER = User(id: NSUUID().uuidString, email: "Sangawere1@gmail.com")
+}

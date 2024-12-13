@@ -8,22 +8,46 @@
 import SwiftUI
 
 struct CategoriesView: View {
+    @StateObject private var overlayViewModel = OverlayViewModel()
+
     var body: some View {
-        VStack(spacing: 0) {
-            Spacer(minLength: 30)
+        ZStack {
+            VStack(spacing: 0) {
+                Spacer(minLength: 30)
+                
+                IncomeView()
+                
+                Spacer()
+                
+                AccountsView()
+                
+                Spacer()
+                
+                ExpensesView()
+            }
+            .padding(.bottom, 16)
             
-            IncomeView()
-            
-            Spacer()
-          
-            AccountsView()
-            
-            Spacer()
-            
-            ExpensesView()
            
+            if let overlay = overlayViewModel.overlayContent, overlayViewModel.isOverlayVisible {
+                ZStack {
+                    Color.black.opacity(0.4)
+                        .ignoresSafeArea()
+                        .onTapGesture {
+                            withAnimation {
+                                overlayViewModel.hideOverlay()
+                            }
+                        }
+                    overlay
+                        .padding()
+                        .background(Color.white)
+                        .cornerRadius(25)
+                        .shadow(radius: 10)
+                }
+                .transition(.opacity)
+                .animation(.easeInOut, value: overlayViewModel.isOverlayVisible)
+            }
         }
-        .padding(.bottom, 16)
+        .environmentObject(overlayViewModel)
     }
 }
 

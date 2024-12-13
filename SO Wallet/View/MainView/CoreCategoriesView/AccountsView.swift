@@ -47,7 +47,7 @@ struct AccountsView: View {
                                 VStack(spacing: 4) {
                                     Text(account.name)
                                         .font(.caption2)
-                                        .foregroundColor(.gray)
+                                        .foregroundColor(.black)
 
                                     RoundedRectangle(cornerRadius: 16)
                                         .stroke(Color.gray, lineWidth: 2)

@@ -22,9 +22,9 @@ struct SideBarHeaderView: View {
                     .font(.subheadline)
                     .foregroundColor(.primary)
                 
-                Text("Sangawere1@gmail.com")
+                Text(User.MOK_USER.email)
                     .font(.footnote)
-                    .foregroundColor(.gray)
+                    .foregroundColor(.blue)
             }
             .padding(.leading, 8)
         }
